@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RoadHelp — მძღოლის გზის დამხმარე</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Leaflet Map -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="navbar">
+        <div class="container nav-content">
+
+            <a href="#home" class="logo">
+                <span class="logo-icon">🛣️</span>
+                <span>Road<span>Help</span></span>
+            </a>
+
+            <nav>
+                <a href="#home">მთავარი</a>
+                <a href="#services">სერვისები</a>
+                <a href="#map-section">რუკა</a>
+                <a href="#about">ჩვენ შესახებ</a>
+            </nav>
+
+            <a href="#services" class="nav-button">
+                დახმარების პოვნა
+            </a>
+
+            <button class="menu-btn" id="menuBtn">
+                ☰
+            </button>
+
+        </div>
+    </header>
+
+
+    <!-- HERO -->
+    <main>
+
+        <section class="hero" id="home">
+
+            <div class="container hero-content">
+
+                <div class="hero-text">
+
+                    <div class="badge">
+                        <span class="pulse"></span>
+                        მძღოლის გზის დამხმარე
+                    </div>
+
+                    <h1>
+                        გზაზე პრობლემა?
+                        <span>ჩვენ დაგეხმარებით.</span>
+                    </h1>
+
+                    <p>
+                        RoadHelp გეხმარება შორ მანძილზე მგზავრობისას
+                        სწრაფად იპოვო შენთან ახლოს მდებარე ავტოსახელოსნო,
+                        ბენზინგასამართი სადგური და სხვა საჭირო სერვისი.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <button class="primary-btn" onclick="findWorkshop()">
+                            🔧 სახელოსნოს პოვნა
+                        </button>
+
+                        <button class="secondary-btn" onclick="findGasStation()">
+                            ⛽ ბენზინგასამართი
+                        </button>
+                    </div>
+
+                    <div class="hero-info">
+                        <div>
+                            <strong>24/7</strong>
+                            <span>ხელმისაწვდომი</span>
+                        </div>
+
+                        <div>
+                            <strong>📍 GPS</strong>
+                            <span>მდებარეობის პოვნა</span>
+                        </div>
+
+                        <div>
+                            <strong>⚡ სწრაფი</strong>
+                            <span>დახმარების ძიება</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="hero-visual">
+
+                    <div class="road-card">
+
+                        <div class="map-decoration"></div>
+
+                        <div class="car">
+                            🚙
+                        </div>
+
+                        <div class="location-point point-one">
+                            🔧
+                        </div>
+
+                        <div class="location-point point-two">
+                            ⛽
+                        </div>
+
+                        <div class="location-point point-three">
+                            🛞
+                        </div>
+
+                        <div class="route-line"></div>
+
+                        <div class="driver-location">
+                            <span></span>
+                            შენი მდებარეობა
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- SERVICES -->
+        <section class="services section" id="services">
+
+            <div class="container">
+
+                <div class="section-heading">
+                    <span>სწრაფი დახმარება</span>
+                    <h2>აირჩიე რა გჭირდება</h2>
+                    <p>
+                        მიუთითე პრობლემა და RoadHelp დაგეხმარება
+                        საჭირო ადგილის პოვნაში.
+                    </p>
+                </div>
+
+
+                <div class="service-grid">
+
+                    <article class="service-card workshop-card">
+
+                        <div class="service-icon">
+                            🔧
+                        </div>
+
+                        <h3>ავტოსახელოსნო</h3>
+
+                        <p>
+                            იპოვე შენთან ყველაზე ახლოს მდებარე
+                            ავტომობილის სერვისი.
+                        </p>
+
+                        <button onclick="findWorkshop()">
+                            სახელოსნოს მოძებნა →
+                        </button>
+
+                    </article>
+
+
+                    <article class="service-card gas-card">
+
+                        <div class="service-icon">
+                            ⛽
+                        </div>
+
+                        <h3>ბენზინგასამართი</h3>
+
+                        <p>
+                            დაგიმთავრდა საწვავი? მოძებნე ახლოს
+                            მდებარე ბენზინგასამართი სადგური.
+                        </p>
+
+                        <button onclick="findGasStation()">
+                            სადგურის მოძებნა →
+                        </button>
+
+                    </article>
+
+
+                    <article class="service-card tire-card">
+
+                        <div class="service-icon">
+                            🛞
+                        </div>
+
+                        <h3>საბურავის სერვისი</h3>
+
+                        <p>
+                            საბურავის პრობლემის შემთხვევაში
+                            იპოვე შესაბამისი სერვისი.
+                        </p>
+
+                        <button onclick="findTireService()">
+                            სერვისის მოძებნა →
+                        </button>
+
+                    </article>
+
+
+                    <article class="service-card battery-card">
+
+                        <div class="service-icon">
+                            🔋
+                        </div>
+
+                        <h3>აკუმულატორი</h3>
+
+                        <p>
+                            ავტომობილის აკუმულატორთან დაკავშირებული
+                            პრობლემის შემთხვევაში იპოვე დახმარება.
+                        </p>
+
+                        <button onclick="findBatteryService()">
+                            დახმარების პოვნა →
+                        </button>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MAP -->
+        <section class="map-section section" id="map-section">
+
+            <div class="container">
+
+                <div class="map-header">
+
+                    <div>
+                        <span>ნავიგაცია</span>
+                        <h2>იპოვე დახმარება შენთან ახლოს</h2>
+                    </div>
+
+                    <button class="location-btn" onclick="getLocation()">
+                        📍 ჩემი მდებარეობა
+                    </button>
+
+                </div>
+
+
+                <div class="map-wrapper">
+
+                    <div id="map"></div>
+
+                    <div class="map-panel">
+
+                        <h3>სერვისების ძიება</h3>
+
+                        <p>
+                            აირჩიე სერვისი, რომლის მოძებნაც გსურს.
+                        </p>
+
+                        <button
+                            class="map-service-btn"
+                            onclick="findWorkshop()"
+                        >
+                            🔧 ავტოსახელოსნო
+                        </button>
+
+                        <button
+                            class="map-service-btn"
+                            onclick="findGasStation()"
+                        >
+                            ⛽ ბენზინგასამართი
+                        </button>
+
+                        <button
+                            class="map-service-btn"
+                            onclick="findTireService()"
+                        >
+                            🛞 საბურავები
+                        </button>
+
+                        <button
+                            class="map-service-btn"
+                            onclick="findBatteryService()"
+                        >
+                            🔋 აკუმულატორი
+                        </button>
+
+                        <div class="map-status" id="status">
+                            📍 დააჭირე „ჩემი მდებარეობა“-ს
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+        <section class="how-section section">
+
+            <div class="container">
+
+                <div class="section-heading">
+                    <span>როგორ მუშაობს?</span>
+                    <h2>სამი მარტივი ნაბიჯი</h2>
+                </div>
+
+                <div class="steps">
+
+                    <div class="step">
+                        <div class="step-number">01</div>
+                        <h3>მიუთითე მდებარეობა</h3>
+                        <p>
+                            მიეცი ბრაუზერს GPS მდებარეობის გამოყენების უფლება.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">02</div>
+                        <h3>აირჩიე სერვისი</h3>
+                        <p>
+                            აირჩიე სახელოსნო, ბენზინგასამართი ან სხვა დახმარება.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">03</div>
+                        <h3>გაემართე დანიშნულებისკენ</h3>
+                        <p>
+                            რუკაზე დაინახავ შესაბამის ადგილებს და შეგიძლია
+                            ნავიგაცია გახსნა.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+        <section class="about section" id="about">
+
+            <div class="container about-content">
+
+                <div class="about-image">
+                    <div class="image-overlay">
+                        <span>ROAD</span>
+                        <strong>HELP</strong>
+                    </div>
+                </div>
+
+                <div class="about-text">
+
+                    <span>RoadHelp-ის შესახებ</span>
+
+                    <h2>
+                        გზაზე მარტო არასდროს დარჩე.
+                    </h2>
+
+                    <p>
+                        შორ მანძილზე მგზავრობა ზოგჯერ მოულოდნელ
+                        პრობლემებთან არის დაკავშირებული. სწორედ ამიტომ
+                        შეიქმნა RoadHelp — მარტივი ციფრული დამხმარე
+                        მძღოლებისთვის.
+                    </p>
+
+                    <p>
+                        ჩვენი მიზანია საჭირო სერვისის პოვნა მაქსიმალურად
+                        მარტივი და სწრაფი გავხადოთ.
+                    </p>
+
+                    <div class="about-features">
+                        <div>✓ მარტივი გამოყენება</div>
+                        <div>✓ GPS მდებარეობა</div>
+                        <div>✓ სწრაფი ძიება</div>
+                        <div>✓ მობილურზე მორგებული</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="container footer-content">
+
+            <div class="footer-logo">
+                🛣️ RoadHelp
+            </div>
+
+            <p>
+                შენი გზის ციფრული დამხმარე.
+            </p>
+
+            <div class="footer-line"></div>
+
+            <small>
+                © 2026 RoadHelp. ყველა უფლება დაცულია.
+            </small>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Leaflet -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
